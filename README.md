@@ -1,2 +1,2 @@
 # lazereyes
-Vision Prescription sender
+LazerEyes: Prescription Sender in Nostr DMs
