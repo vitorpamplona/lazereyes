@@ -100,7 +100,7 @@ async function sendMessage() {
 
     let medicalData = await createMedicalDataEvent(fhirPackage, receiverPubkey)
 
-    const message = $("#message").val() + "\n\n" + await createNEmbed(medicalData)
+    const message = $("#message").val() + "\n\nnostr:" + await createNEmbed(medicalData)
 
     if (senderPubkey === receiverPubkey) {
         let wrap = await createNip17SelfWraps(message, senderPubkey)
