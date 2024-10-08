@@ -82,22 +82,59 @@ async function sendMessage() {
     const doctor = practitioner(senderPubkey, getName(senderPubkey))
     const pat = patient(receiverPubkey, getName(receiverPubkey))
 
-    const rightEye = rightSpec(
-        parseFloat($("#right-sphere").val()),
-        parseFloat($("#right-cylinder").val()),
-        parseInt($("#right-axis").val()),
-        parseFloat($("#right-add").val()),
-    )
-    
-    const leftEye = leftSpec(
-        parseFloat($("#left-sphere").val()),
-        parseFloat($("#left-cylinder").val()),
-        parseInt($("#left-axis").val()),
-        parseFloat($("#left-add").val()),
-    )
+    const isContacts = $('input[type="radio"][name="type"]:checked').val() == "contacts"
+
+    let rightEye = {}
+    let leftEye = {}
+
+    if (isContacts) {
+        rightEye = rightContactsSpec(
+            parseFloat($("#right-sphere").val()),
+            parseFloat($("#right-cylinder").val()),
+            parseInt($("#right-axis").val()),
+            $("#right-curve").val(),
+            $("#right-diameter").val(),
+            $("#right-brand").val(),
+        )
+        
+        leftEye = leftContactsSpec(
+            parseFloat($("#left-sphere").val()),
+            parseFloat($("#left-cylinder").val()),
+            parseInt($("#left-axis").val()),
+            $("#left-curve").val(),
+            $("#left-diameter").val(),
+            $("#left-brand").val(),
+        )
+    } else {
+        rightEye = rightGlassesSpec(
+            parseFloat($("#right-sphere").val()),
+            parseFloat($("#right-cylinder").val()),
+            parseInt($("#right-axis").val()),
+            parseInt($("#right-pd").val()),
+            parseFloat($("#right-inter-add").val()),
+            parseFloat($("#right-add").val()),
+            $("#right-prism-value").val(),
+            $("#right-prism-base").val(),
+        )
+        
+        leftEye = leftGlassesSpec(
+            parseFloat($("#left-sphere").val()),
+            parseFloat($("#left-cylinder").val()),
+            parseInt($("#left-axis").val()),
+            parseInt($("#left-pd").val()),
+            parseFloat($("#left-inter-add").val()),
+            parseFloat($("#left-add").val()),
+            $("#left-prism-value").val(),
+            $("#left-prism-base").val(),
+        )
+    }
 
     const fhirPackage = fhirBundle("1", formatDateFhir(new Date()), doctor, pat, rightEye, leftEye)
 
+    
+
+    console.log(fhirPackage)
+/*
     let medicalData = await createMedicalDataEvent(fhirPackage, receiverPubkey)
 
     const message = $("#message").val() + "\n\nnostr:" + await createNEmbed(medicalData)
@@ -110,7 +147,7 @@ async function sendMessage() {
 
         publish(wraps.receiver, getRelayList(receiverPubkey), updateResultReceiver)
         publish(wraps.sender, getRelayList(senderPubkey), updateResultSender)
-    }
+    }*/
 }
 
 function getMetadata(pubkey, metaProp, defaultValue) {

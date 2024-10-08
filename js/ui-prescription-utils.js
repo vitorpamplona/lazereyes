@@ -57,3 +57,49 @@ function validateAdd(input) {
 
     input.value = addPlusSign(roundByQuarter(value).toFixed(2))
 }
+
+function validatePD(input) {
+    const value = parseFloat(input.value)
+
+    if (isNaN(value)) {
+        input.value = ""  
+        return
+    }
+
+    if (value >= 0 && value <= 50) {
+        input.value = value
+    } else {
+        input.value = ""  
+    }
+}
+
+function validatePrismValue(input) {
+    const value = parseFloat(input.value)
+
+    if (isNaN(value)) {
+        input.value = ""  
+        return
+    }
+
+    if (value >= 0 && value <= 50) {
+        input.value = value
+    } else {
+        input.value = ""  
+    }
+}
+
+
+function validatePrismBase(input) {
+    const value = parseFloat(input.value)
+
+    if (isNaN(value)) {
+        input.value = ""  
+        return
+    }
+
+    if (value >= 0 && value <= 50) {
+        input.value = value
+    } else {
+        input.value = ""  
+    }
+}
