@@ -131,10 +131,8 @@ async function sendMessage() {
 
     const fhirPackage = fhirBundle("1", formatDateFhir(new Date()), doctor, pat, rightEye, leftEye)
 
-    
-
     console.log(fhirPackage)
-/*
+
     let medicalData = await createMedicalDataEvent(fhirPackage, receiverPubkey)
 
     const message = $("#message").val() + "\n\nnostr:" + await createNEmbed(medicalData)
@@ -147,7 +145,7 @@ async function sendMessage() {
 
         publish(wraps.receiver, getRelayList(receiverPubkey), updateResultReceiver)
         publish(wraps.sender, getRelayList(senderPubkey), updateResultSender)
-    }*/
+    }
 }
 
 function getMetadata(pubkey, metaProp, defaultValue) {
