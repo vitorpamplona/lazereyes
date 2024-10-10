@@ -61,6 +61,11 @@ function simplifyRelay(url) {
     return removeSuffix(removePrefix(removePrefix(url, "wss://"), "ws://"), "/")
 } 
 
+function parsePrismBase(base) {
+    if (base == "none") return undefined
+    return base
+}
+
 function updateResults() { 
     let str = "<table>"
     str += "<tr><th>Relay</th><th>Result</th></tr>"
@@ -114,7 +119,7 @@ async function sendMessage() {
             parseFloat($("#right-inter-add").val()),
             parseFloat($("#right-add").val()),
             $("#right-prism-value").val(),
-            $("#right-prism-base").val(),
+            parsePrismBase($("#right-prism-base").val()),
         )
         
         leftEye = leftGlassesSpec(
@@ -125,7 +130,7 @@ async function sendMessage() {
             parseFloat($("#left-inter-add").val()),
             parseFloat($("#left-add").val()),
             $("#left-prism-value").val(),
-            $("#left-prism-base").val(),
+            parsePrismBase($("#left-prism-base").val()),
         )
     }
 
