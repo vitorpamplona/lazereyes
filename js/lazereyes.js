@@ -190,10 +190,11 @@ function onNewEvent(event) {
 function onPubKeyChange(newValue) {
     const data = NostrTools.nip19.decode(newValue).data
 
-    if (data.pubkey)
+    if (data.pubkey) {
         receiverPubkey = data.pubkey
-    else (data.length == 64)
+    } else if (data.length == 64) {
         receiverPubkey = data
+    }
 
     if (data.relays === undefined || data.relays == 0) {
         loadMetadataAndDMRelayList(receiverPubkey, defaultRelays, onNewEvent)
