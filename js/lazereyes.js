@@ -8,6 +8,8 @@ var relay = undefined
 var loggedIn = false
 var isOwner = false
 
+var defaultRelays = ['wss://nostr.mom', 'wss://nos.lol', 'wss://relay.damus.io', 'wss://relay.primal.net']
+
 async function updateLoggedInfo() {
     let loggedInKey = undefined
 
@@ -187,8 +189,17 @@ function onNewEvent(event) {
 
 function onPubKeyChange(newValue) {
     const data = NostrTools.nip19.decode(newValue).data
-    receiverPubkey = data.pubkey
-    loadMetadataAndDMRelayList(data.pubkey, data.relays, onNewEvent)
+
+    if (data.pubkey)
+        receiverPubkey = data.pubkey
+    else (data.length == 64)
+        receiverPubkey = data
+
+    if (data.relays === undefined || data.relays == 0) {
+        loadMetadataAndDMRelayList(receiverPubkey, defaultRelays, onNewEvent)
+    } else {
+        loadMetadataAndDMRelayList(receiverPubkey, data.relays, onNewEvent)
+    }    
 }
 
 function onPubKeyFocusLost(event) {
@@ -254,5 +265,5 @@ $(document).ready(async function () {
     });
 
     await updateLoggedInfo();
-    loadMetadataAndDMRelayList(senderPubkey, ['wss://nostr.mom'], onNewEvent)
+    loadMetadataAndDMRelayList(senderPubkey, defaultRelays, onNewEvent)
 });
